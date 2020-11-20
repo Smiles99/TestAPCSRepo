@@ -1,0 +1,108 @@
+import com.sun.jdi.Value;
+
+import java.util.Random;
+
+public class Demo {
+    public static void printLoop(int n){
+        int x = 0;
+        int y = 1;
+        while (n > 0) {
+            while (x < n) {
+                System.out.print(y);
+                x++;
+            }
+            x = 0;
+            n--;
+            y++;
+            System.out.println();
+        }
+    }
+    public static void main(String[]args){
+        printLoop(5);
+        create2DArray(5, 4, 4);
+        create2DArrayRandomized(4, 10, 100);
+    }
+    public static String arrToString(int[] arr){
+        String hold = "{";
+        int x = 0;
+        if (arr.length == 0) {
+            hold = "{}";
+            x++;
+        } else {
+            while (x < arr.length) {
+                if (arr.length == 1) {
+                    hold = hold + arr[x] + "}";
+                    x++;
+                } else {
+                    if (x == 0) {
+                        hold = hold + arr[x];
+                        x++;
+                    } else {
+                        if (x == arr.length - 1) {
+                            hold = hold + "," + " " + arr[x] + "}";
+                            x++;
+                        } else {
+                            hold = hold + "," + " " + arr[x];
+                            x++;
+                        }
+                    }
+                }
+            }
+        }
+        return hold;
+    }
+    public static String arrayDeepToString(int[][] arr) {
+        int y = 0;
+        String answer = "{";
+        while (y < arr.length) {
+            answer = answer + "," + " " + arrToString (arr[y]);
+            y++;
+        }
+        answer = answer + "}";
+        System.out.println(arrayDeepToString(arr).replace("}, ","},\n"));
+        return answer;
+    }
+    public static int[][] create2DArray(int rows, int cols, int MaxValue) {
+        Random rand = new Random();
+        int maxval = MaxValue + 1;
+        int int_MaxValue = rand.nextInt(maxval);
+        int x = 0;
+        int y = 0;
+        int[][] answer = new int[rows][cols];
+        while (x < rows) {
+            while (y < cols) {
+                answer[x][y] = int_MaxValue;
+                y++;
+            }
+            y = 0;
+            x++;
+        }
+        return answer;
+    }
+    public static int[][] create2DArrayRandomized(int rows, int cols, int maxValue) {
+        int colsmax = cols;
+        int colsmin = 0;
+        int colsrange = colsmax - colsmin + 1;
+        int valuemax = maxValue;
+        int valuemin = 0;
+        int valuerange = valuemax - valuemin + 1;
+        int x = 0;
+        int y = 0;
+        int z = 0;
+        int[][] answer = new int[rows][cols];
+        while (x < rows) {
+            int colsrand = (int)(Math.random() * colsrange) + colsmin;
+            z = colsrand;
+            while (y < z) {
+                int valuerand = (int)(Math.random() * valuerange) + valuemin;
+                answer[x][y] = valuerand;
+                System.out.print(answer[x][y]);
+                y++;
+            }
+            y = 0;
+            x++;
+            System.out.println();
+        }
+        return answer;
+    }
+}
